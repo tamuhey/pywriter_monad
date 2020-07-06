@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
 from typing import Callable, Generic, TypeVar
 import toolz
+import sys
 
-try:
+if sys.version_info >= (3, 8):
     from typing import Protocol
-except ImportError:
+else:
     from typing_extensions import Protocol
 
 
