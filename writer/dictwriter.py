@@ -27,7 +27,7 @@ class DictWriter(Writer[T], Generic[T, K, V]):
     """Like the writer monad, it holds a writer `w` as a dict. Useful for logging."""
 
     a: T
-    w: DictM[K, V] = field(default_factory=DictM)
+    w: DictM[K, V] = field(default_factory=DictM)  # type: ignore
 
     def __post_init__(self):
         if not isinstance(self.w, dict):  # type: ignore
