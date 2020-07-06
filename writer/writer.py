@@ -1,13 +1,16 @@
 from dataclasses import dataclass, field
-from typing import Callable, Generic, TypeVar, runtime_checkable
+from typing import Callable, Generic, TypeVar
 import toolz
-from typing_extensions import Protocol
+
+try:
+    from typing import Protocol
+except ImportError:
+    from typing_extensions import Protocol
 
 
 T = TypeVar("T")
 
 
-@runtime_checkable
 class Monoid(Protocol):
     def __add__(self, other: "Monoid") -> "Monoid":
         ...
