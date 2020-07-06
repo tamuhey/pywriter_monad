@@ -4,12 +4,16 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "pywriter_monad"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = [ "Yohei Tamura <tamuhey@gmail.com>",]
-
 [[tool.poetry.packages]]
 include = "writer"
+
+[tool.versionup]
+files = [ "writer/VERSION.py",]
+commit = true
+tag = true
 
 [tool.poetry.dependencies]
 python = ">=3.6"
@@ -19,8 +23,3 @@ toolz = "^0.10.0"
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 black = "^19.10b0"
-
-[tool.versionup]
-files = [ "writer/VERSION.py",]
-commit = true
-tag = true
