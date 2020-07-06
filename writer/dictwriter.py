@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, Generic, TypeVar, Union
+from typing import Dict, Generic, Iterable, Mapping, Tuple, TypeVar, Union, overload
 from toolz import merge
 from .writer import Writer
 
@@ -30,10 +30,7 @@ class DictWriter(Writer[T], Generic[T, K, V]):
     # TODO https://stackoverflow.com/questions/62753881/how-to-annotate-the-type-of-field-in-dataclass-to-be-different-from-the-type-of
     w: DictM[K, V] = field(default_factory=DictM)  # type: ignore
 
-    def __post_init__(self):
-        if not isinstance(self.w, dict):  # type: ignore
-            raise ValueError(
-                f"expected `self.w` be `dict` type, but found {self.w} (type: {type(self.w)}"
-            )
-        self.w = DictM(self.w)
+    def __init__(self, a: T, w: Union[Iterable[Tuple[K, V]], Mapping[K, V]]) -> None:
+        self.a = a
+        self.w = DictM(w)
 
