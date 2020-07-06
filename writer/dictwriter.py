@@ -27,6 +27,7 @@ class DictWriter(Writer[T], Generic[T, K, V]):
     """Like the writer monad, it holds a writer `w` as a dict. Useful for logging."""
 
     a: T
+    # TODO https://stackoverflow.com/questions/62753881/how-to-annotate-the-type-of-field-in-dataclass-to-be-different-from-the-type-of
     w: DictM[K, V] = field(default_factory=DictM)  # type: ignore
 
     def __post_init__(self):
