@@ -7,7 +7,7 @@ import writer
 def test_dictwriter():
     a = DictWriter(1, {"foo": "a"})
 
-    def f(x):
+    def f(x: int):
         return DictWriter(x + 2, {"bar": "b"})
 
     assert writer.bind(f, a) == DictWriter(3, {"foo": "a", "bar": "b"})
@@ -19,11 +19,11 @@ def test_add_dictwriter():
     assert writer.add(add, a, b) == DictWriter(3, {"foo": "a", "bar": "b"})
 
 
-def f(x: List[int]) -> DictWriter[List[int]]:
+def f(x: List[int]) -> DictWriter[List[int], str, str]:
     return DictWriter(x + [1], {"foo": "a"})
 
 
-def g(x: List[int]) -> DictWriter[List[int]]:
+def g(x: List[int]) -> DictWriter[List[int], str, str]:
     return DictWriter([2, 3] + x, {"bar": "b"})
 
 

@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Callable, Generic, Protocol, TypeVar, runtime_checkable
+from typing import Callable, Generic, TypeVar, runtime_checkable
 import toolz
 from typing_extensions import Protocol
 
