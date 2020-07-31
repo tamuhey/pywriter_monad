@@ -20,7 +20,7 @@ python = ">=3.6"
 toolz = "^0.10.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^6.0"
 black = "^19.10b0"
 mypy = "^0.782"
 
