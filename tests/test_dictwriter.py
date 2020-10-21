@@ -28,6 +28,5 @@ def g(x: List[int]) -> DictWriter[List[int], str, str]:
 
 
 def test_dictwriter_compose():
-    assert writer.compose(g, f)([100]) == DictWriter(
-        [2, 3, 100, 1], {"foo": "a", "bar": "b"}
-    )
+    ret: DictWriter = writer.compose(g, f)([100])
+    assert ret == DictWriter([2, 3, 100, 1], {"foo": "a", "bar": "b"})
