@@ -1,7 +1,8 @@
-from writer import DictWriter
 from operator import add
 from typing import List
+
 import writer
+from writer import DictWriter
 
 
 def test_dictwriter():
@@ -10,13 +11,13 @@ def test_dictwriter():
     def f(x: int):
         return DictWriter(x + 2, {"bar": "b"})
 
-    assert writer.bind(f, a) == DictWriter(3, {"foo": "a", "bar": "b"})
+    assert writer.bind(f)(a) == DictWriter(3, {"foo": "a", "bar": "b"})
 
 
 def test_add_dictwriter():
     a = DictWriter(1, {"foo": "a"})
     b = DictWriter(2, {"bar": "b"})
-    assert writer.add(add, a, b) == DictWriter(3, {"foo": "a", "bar": "b"})
+    assert writer.add(add)(a, b) == DictWriter(3, {"foo": "a", "bar": "b"})
 
 
 def f(x: List[int]) -> DictWriter[List[int], str, str]:
