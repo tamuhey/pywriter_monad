@@ -31,5 +31,8 @@ class DictWriter(Writer[T], Generic[T, K, V]):
         ...
 
     def __init__(self, a: T, w: Iterable[Tuple[K, V]]) -> None:
+        ...
+
+    def __init__(self, a: T, w) -> None:
         self.a = a
         self.w = DictM(w)

@@ -33,10 +33,11 @@ class Writer(Generic[T]):
 R = TypeVar("R", bound=Writer)
 
 
+# TODO: https://github.com/microsoft/pyright/issues/1384
 def bind(
-    f: Callable[[T], R[T]],
-) -> Callable[[R[T]], R[T]]:
-    def fn(a: R[T]) -> R[T]:
+    f: Callable[[T], R],
+) -> Callable[[R], R]:
+    def fn(a: R) -> R:
         b = f(a.a)
         return a.__class__(b.a, a.w + b.w)
 
@@ -68,7 +69,7 @@ def add(
     return fn
 
 
-def compose(*funcs: Callable[[T], R[T]]) -> Callable[[T], R[T]]:
+def compose(*funcs: Callable[[T], R]) -> Callable[[T], R]:
     if len(funcs) == 0:
         raise ValueError(f"One or more functions must be passed")
 
