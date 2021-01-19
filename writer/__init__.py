@@ -1,5 +1,4 @@
-from .writer import Writer, bind, map, add, compose
-from .dictwriter import DictWriter
 from .VERSION import __version__
+from .writer import Writer, add, bind, compose, map
 
-__all__ = ["Writer", "bind", "map", "add", "compose", "DictWriter", "__version__"]
+__all__ = ["Writer", "bind", "map", "add", "compose", "__version__"]

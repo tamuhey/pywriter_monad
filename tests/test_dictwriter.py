@@ -1,33 +1,33 @@
 from operator import add
-from typing import List
+from typing import Dict, List
 
 import writer
-from writer import DictWriter
+from writer import Writer
 
 
 def test_dictwriter():
-    a = DictWriter(1, {"foo": "a"})
+    a = Writer(1, {"foo": "a"})
 
     def f(x: int):
-        return DictWriter(x + 2, {"bar": "b"})
+        return Writer(x + 2, {"bar": "b"})
 
-    assert writer.bind(f)(a) == DictWriter(3, {"foo": "a", "bar": "b"})
+    assert writer.bind(f)(a) == Writer(3, {"foo": "a", "bar": "b"})
 
 
 def test_add_dictwriter():
-    a = DictWriter(1, {"foo": "a"})
-    b = DictWriter(2, {"bar": "b"})
-    assert writer.add(add)(a, b) == DictWriter(3, {"foo": "a", "bar": "b"})
+    a = Writer(1, {"foo": "a"})
+    b = Writer(2, {"bar": "b"})
+    assert writer.add(add)(a, b) == Writer(3, {"foo": "a", "bar": "b"})
 
 
-def f(x: List[int]) -> DictWriter[List[int], str, str]:
-    return DictWriter(x + [1], {"foo": "a"})
+def f(x: List[int]) -> Writer[List[int], Dict[str, str]]:
+    return Writer(x + [1], {"foo": "a"})
 
 
-def g(x: List[int]) -> DictWriter[List[int], str, str]:
-    return DictWriter([2, 3] + x, {"bar": "b"})
+def g(x: List[int]) -> Writer[List[int], Dict[str, str]]:
+    return Writer([2, 3] + x, {"bar": "b"})
 
 
 def test_dictwriter_compose():
-    ret: DictWriter = writer.compose(g, f)([100])
-    assert ret == DictWriter([2, 3, 100, 1], {"foo": "a", "bar": "b"})
+    ret: Writer = writer.compose(g, f)([100])
+    assert ret == Writer([2, 3, 100, 1], {"foo": "a", "bar": "b"})
