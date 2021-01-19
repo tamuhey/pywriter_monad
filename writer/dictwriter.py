@@ -30,6 +30,7 @@ class DictWriter(Writer[T], Generic[T, K, V]):
     def __init__(self, a: T, w: Mapping[K, V]) -> None:
         ...
 
+    @overload
     def __init__(self, a: T, w: Iterable[Tuple[K, V]]) -> None:
         ...
 

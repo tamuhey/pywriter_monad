@@ -79,8 +79,7 @@ def compose(*funcs: Callable[[T], R]) -> Callable[[T], R]:
     def f(a: T) -> R:
         m = last(a)
         for fn in funcs[::-1]:
-            fn = bind(fn)
-            m = fn(m)
+            m = bind(fn)(m)
         return m
 
     return f
