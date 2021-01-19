@@ -2,8 +2,6 @@ import sys
 from dataclasses import dataclass, field
 from typing import Callable, Generic, TypeVar
 
-import toolz
-
 if sys.version_info >= (3, 8):
     from typing import Protocol
 else:
@@ -32,10 +30,13 @@ class Writer(Generic[T]):
     w: Monoid = field(default_factory=Monoid.mempty)
 
 
+R = TypeVar("R", bound=Writer)
+
+
 def bind(
-    f: Callable[[T], Writer[T]],
-) -> Callable[[Writer[T]], Writer[T]]:
-    def fn(a: Writer[T]):
+    f: Callable[[T], R[T]],
+) -> Callable[[R[T]], R[T]]:
+    def fn(a: R[T]) -> R[T]:
         b = f(a.a)
         return a.__class__(b.a, a.w + b.w)
 
@@ -67,12 +68,18 @@ def add(
     return fn
 
 
-R = TypeVar("R", bound=Writer)
-
-
-def compose(*funcs: Callable[[T], R]) -> Callable[[T], R]:
+def compose(*funcs: Callable[[T], R[T]]) -> Callable[[T], R[T]]:
     if len(funcs) == 0:
         raise ValueError(f"One or more functions must be passed")
+
     last = funcs[-1]
-    bind_funcs = [bind(f) for f in funcs[:-1]] + [last]
-    return toolz.compose(*bind_funcs)
+    funcs = funcs[:-1]
+
+    def f(a: T) -> R:
+        m = last(a)
+        for fn in funcs[::-1]:
+            fn = bind(fn)
+            m = fn(m)
+        return m
+
+    return f
