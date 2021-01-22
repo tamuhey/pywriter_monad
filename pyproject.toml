@@ -21,7 +21,7 @@ python = ">=3.6"
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
 black = "^19.10b0"
-mypy = "^0.782"
+mypy = "^0.800"
 
 [tool.poetry.dependencies.typing-extensions]
 version = "^3.7.4"
