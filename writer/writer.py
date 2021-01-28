@@ -1,8 +1,8 @@
 import sys
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Generic, TypeVar
+from typing import Any, Callable, Dict, FrozenSet, Generic, TypeVar
 
-T = TypeVar("T", covariant=True)
+T = TypeVar("T")
 W = TypeVar("W")
 
 
@@ -24,7 +24,9 @@ class Writer(Generic[T, W]):
 
 
 # TODO: https://github.com/microsoft/pyright/issues/1384
-def bind(f: Callable[[T], Writer[T, W]],) -> Callable[[Writer[T, W]], Writer[T, W]]:
+def bind(
+    f: Callable[[T], Writer[T, W]],
+) -> Callable[[Writer[T, W]], Writer[T, W]]:
     def fn(a: Writer[T, W]) -> Writer[T, W]:
         b = f(a.a)
         return a.__class__(b.a, add_inner(a.w, b.w))
